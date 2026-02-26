@@ -38,20 +38,19 @@ To start the interactive chat loop with the predictive mind:
 node index.js
 ```
 
-### Training Mode
+### Scraping Mode
 
-To train the mind on a text file or an entire folder of text files:
+To gather training data from a website:
 
 ```bash
-node train.js <path_to_file_or_folder>
+node scraper.js <url>
 ```
 
-Example (for a folder):
+This will save the text of the main page and all linked pages (one level deep) into the `./data` folder. You can then run the trainer on this folder:
+
 ```bash
 node train.js ./data
 ```
-
-The script will recursively find all files in the directory and process them one by one. The state of the mind is automatically saved to `mind.bin` during training.
 
 ### Interaction
 
