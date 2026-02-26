@@ -30,11 +30,28 @@ A Node.js implementation of a **Predictive Coding Neural Network** based on the 
 
 ## Running the Project
 
+### Chat Mode
+
 To start the interactive chat loop with the predictive mind:
 
 ```bash
 node index.js
 ```
+
+### Training Mode
+
+To train the mind on a text file without the chat interface:
+
+```bash
+node train.js <path_to_text_file>
+```
+
+Example:
+```bash
+node train.js data/sample.txt
+```
+
+The state of the mind is automatically saved to `mind.bin` during training.
 
 ### Interaction
 
