@@ -40,18 +40,18 @@ node index.js
 
 ### Training Mode
 
-To train the mind on a text file without the chat interface:
+To train the mind on a text file or an entire folder of text files:
 
 ```bash
-node train.js <path_to_text_file>
+node train.js <path_to_file_or_folder>
 ```
 
-Example:
+Example (for a folder):
 ```bash
-node train.js data/sample.txt
+node train.js ./data
 ```
 
-The state of the mind is automatically saved to `mind.bin` during training.
+The script will recursively find all files in the directory and process them one by one. The state of the mind is automatically saved to `mind.bin` during training.
 
 ### Interaction
 
