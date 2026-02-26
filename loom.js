@@ -5,12 +5,12 @@ const math = require('mathjs');
 class Layer {
     constructor(size, nextSize = 0) {
         this.size = size;
-        this.x = math.zeros(size);
-        this.e = math.zeros(size);
-        this.bias = math.zeros(size);
+        this.x = math.matrix(math.zeros(size));
+        this.e = math.matrix(math.zeros(size));
+        this.bias = math.matrix(math.zeros(size));
         
         if (nextSize > 0) {
-            this.w = math.multiply(math.random([size, nextSize]), 0.01);
+            this.w = math.matrix(math.multiply(math.random([size, nextSize]), 0.01));
         } else {
             this.w = null;
         }
@@ -57,7 +57,10 @@ class Mind {
             for (let l = 0; l < this.layers.length - 1; l++) {
                 const currentLayer = this.layers[l];
                 const nextLayer = this.layers[l + 1];
-                const dw = math.multiply(this.lr, math.multiply(math.reshape(currentLayer.e, [-1, 1]), math.reshape(nextLayer.x, [1, -1])));
+                // Use math.matrix for reshaped components to ensure they are matrix objects
+                const e_reshaped = math.matrix(math.reshape(currentLayer.e, [-1, 1]));
+                const x_reshaped = math.matrix(math.reshape(nextLayer.x, [1, -1]));
+                const dw = math.multiply(this.lr, math.multiply(e_reshaped, x_reshaped));
                 currentLayer.w = math.add(currentLayer.w, dw);
             }
 
@@ -74,9 +77,9 @@ class Mind {
         const oldSize = layer.size;
         const newSize = oldSize + count;
 
-        const newX = math.zeros(newSize);
-        const newE = math.zeros(newSize);
-        const newBias = math.zeros(newSize);
+        const newX = math.matrix(math.zeros(newSize));
+        const newE = math.matrix(math.zeros(newSize));
+        const newBias = math.matrix(math.zeros(newSize));
         
         layer.x.forEach((val, idx) => newX.set(idx, val));
         layer.x = newX;
@@ -85,9 +88,10 @@ class Mind {
         layer.size = newSize;
 
         if (layer.w) {
-            const newW = math.zeros([newSize, this.layers[layerIndex + 1].size]);
+            const nextLayerSize = this.layers[layerIndex + 1].size;
+            const newW = math.matrix(math.zeros([newSize, nextLayerSize]));
             for (let i = 0; i < newSize; i++) {
-                for (let j = 0; j < this.layers[layerIndex + 1].size; j++) {
+                for (let j = 0; j < nextLayerSize; j++) {
                     if (i < oldSize) {
                         newW.set([i, j], layer.w.get([i, j]));
                     } else {
@@ -100,7 +104,7 @@ class Mind {
 
         if (layerIndex > 0) {
             const prevLayer = this.layers[layerIndex - 1];
-            const newPrevW = math.zeros([prevLayer.size, newSize]);
+            const newPrevW = math.matrix(math.zeros([prevLayer.size, newSize]));
             for (let i = 0; i < prevLayer.size; i++) {
                 for (let j = 0; j < newSize; j++) {
                     if (j < oldSize) {
