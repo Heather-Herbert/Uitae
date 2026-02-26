@@ -1,0 +1,29 @@
+{
+  "name": "uitae",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heather-Herbert/Uitae.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Heather-Herbert/Uitae/issues"
+  },
+  "homepage": "https://github.com/Heather-Herbert/Uitae#readme",
+  "dependencies": {
+    "mathjs": "^15.1.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.2",
+    "globals": "^17.3.0"
+  }
+}
